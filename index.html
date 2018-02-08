@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+<meta charset="utf-8" />
+<title>Doki Doki Poem Minigame</title>
+<link rel="stylesheet" type="text/css" href="dokistyle1.css">
+</head>
+<body>
+  <div id="mainContent">
+      <div id="say" class="girl"></div>
+      <div id="nat" class="girl"></div>
+      <div id="yuri" class="girl"></div>
+  </div>
+  <div id="text1" class="text left">incapable</div>
+  <div id="text2" class="text right">incapable</div>
+  <div id="text3" class="text left">incapable</div>
+  <div id="text4" class="text right">incapable</div>
+  <div id="text5" class="text left">incapable</div>
+  <div id="text6" class="text right">incapable</div>  
+  <div id="text7" class="text left">incapable</div>
+  <div id="text8" class="text right">incapable</div> 
+  <div id="text9" class="text left">incapable</div>
+  <div id="text10" class="text right">incapable</div>   
+  <div id="girlt1" class="fetext">Sayori: 0</div>
+  <div id="girlt2" class="fetext">Natsuki: 0</div>
+  <div id="girlt3" class="fetext">Yuri: 0</div>
+  <div id="girlt3" class="fetext">Yuri: 0</div>
+  <div id="speaker1" class="speaker"></div>
+  <audio id="player" src="Okay.mp3" autoplay loop></audio>
+  <script src="words.js"></script>
+  <script>
+    var background = document.getElementById("mainContent");
+    var natsuki = document.getElementById("nat");
+    var sayori = document.getElementById("say");
+    var yuri = document.getElementById("yuri");
+    var texts = document.getElementsByClassName("text");
+    var girls = document.getElementsByClassName("girl");
+    var move = 15;
+    var jump = 20;
+    var minleft = -35;
+    var maxleft = 475;
+    var sayori_count = 0;
+    var natsuki_count = 0;
+    var yuri_count = 0;
+    var timer = setInterval(free_move, 3000);
+    var timer2 = setInterval(updateScreen, 100);
+    var girl = 1;
+    var musicon = true;
+    var window_state = "visible";
+    var curWidth = window.innerWidth;
+    var curHeight = window.innerHeight;
+    
+    function adjustW(width) {
+        return Math.floor((width / 1920) * window.innerWidth);
+    }
+    
+    function adjustH(height) {
+        return Math.floor((height / 1080) * window.innerHeight);
+    }
+    
+    function updateScreen() {
+        if (curWidth != window.innerWidth || curHeight != window.innerHeight) {
+            move = adjustW(15);
+            jump = adjustH(30);
+            minleft = adjustW(-35);
+            maxleft = adjustW(475);        
+            natsuki.left = adjustW(100);
+            natsuki.top = adjustH(842);
+            sayori.left = adjustW(250);
+            sayori.top = adjustH(842);  
+            yuri.left = adjustW(400);
+            yuri.top = adjustH(842);   
+            natsuki.style.left = natsuki.left + "px";
+            natsuki.style.top = natsuki.top + "px";
+            sayori.style.left = sayori.left + "px";
+            sayori.style.top = sayori.top + "px";  
+            yuri.style.left = yuri.left + "px";
+            yuri.style.top = yuri.top + "px";
+            background.style.width = window.innerWidth + "px";
+            background.style.height = window.innerHeight + "px";
+            curWidth = window.innerWidth;
+            curHeight = window.innerHeight;
+        }
+    }
+    
+    function free_move() {
+        if (window_state == "visible") {
+            if (girl == 1)
+                sayori.movement();
+            else if (girl == 2)
+                natsuki.movement();
+            else
+                yuri.movement();
+            
+            girl == 3 ? girl -= 2 : girl++;
+        }
+    }    
+    
+    for (i = 0; i < girls.length; i++) {
+        girls[i].update = function () {
+            this.left += move;
+            this.style.left = this.left + "px";
+            this.top += jump;
+            this.style.top = this.top + "px";
+            this.style.backgroundImage = "url(" + this.id + "_stand.png)";
+            this.removeEventListener("transitionend", this.update, true);    
+        }
+        
+        girls[i].move = function () {
+          this.addEventListener("transitionend", this.update, true);
+          this.left += move;
+          this.style.left = this.left + "px";
+          this.top -= jump;
+          this.style.top = this.top + "px";
+        }        
+        
+        girls[i].jump = function () {
+          this.addEventListener("transitionend", this.update, true);
+          this.style.backgroundImage = "url(" + this.id + "_air.png)";
+          this.left += move;
+          this.style.left = this.left + "px";
+          this.top -= jump;
+          this.style.top = this.top + "px";
+        }     
+
+        girls[i].movement = function () {
+          var random = Math.random();
+          if (this.left < minleft) {
+            this.style.transform = "scaleX(-1)";
+            move = Math.abs(move);
+            this.move();
+          } else if (this.left > maxleft) {
+            this.style.transform = "scaleX(1)";
+            move *= -1;
+            this.move();
+          } else if (random < 0.50) {
+            this.style.transform = "scaleX(1)";
+            move *= -1;
+            this.move();
+          } else {
+            this.style.transform = "scaleX(-1)";
+            move = Math.abs(move);
+            this.move();      
+          }
+        }            
+    }
+    
+    for (i = 0; i < texts.length; i++) {
+        texts[i].onmouseover = function () {
+            this.style.textShadow = "2px 5px 5px black"
+        };
+        
+        texts[i].onmouseleave = function () {
+            this.style.textShadow = ""
+        };    
+            
+        texts[i].onmousedown = function () {
+            inc_count(this.innerHTML);
+            this.innerHTML = choose();
+        }; 
+    } 
+    
+    document.getElementById("speaker1").onmousedown = function click() {
+        if (musicon) {
+            this.style.backgroundImage = "url(speakeroff.png)";
+            document.getElementById('player').volume = 0;
+            musicon = false;
+        } else {
+            this.style.backgroundImage = "url(speakeron.png)";
+            document.getElementById('player').volume = 1;    
+            musicon = true;
+        }
+    }
+    
+    document.getElementById("text1").innerHTML = choose();
+    document.getElementById("text2").innerHTML = choose();  
+    document.getElementById("text3").innerHTML = choose();
+    document.getElementById("text4").innerHTML = choose();
+    document.getElementById("text5").innerHTML = choose();
+    document.getElementById("text6").innerHTML = choose();
+    document.getElementById("text7").innerHTML = choose();
+    document.getElementById("text8").innerHTML = choose();
+    document.getElementById("text9").innerHTML = choose();
+    document.getElementById("text10").innerHTML = choose();
+
+  </script>
+  <script src="stop.js"></script>
+</body>
+
+</html>
