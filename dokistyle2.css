@@ -1,0 +1,158 @@
+#mainContent {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-image: url("assets/notebook.png");
+  width: 1920px;
+  height: 949px;
+  overflow: hidden;
+}
+
+#cover {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-image: url("assets/cover.png");
+  width: 1920px;
+  height: 940px;
+  overflow: hidden;
+  visibility: hidden;  
+}
+
+.girl {
+  position: absolute;
+  width: 128px;
+  height: 128px;
+  top: 740px;
+  -webkit-transition-duration: 200ms;
+  -webkit-transition-timing-function: ease-in-out;
+}
+
+#nat {
+  background-image: url("assets/nat_stand.png");
+  left: 50px;
+}
+
+#say {
+  background-image: url("assets/say_stand.png");
+  left: 150px;
+}
+
+#yuri {
+  background-image: url("assets/yuri_stand.png");
+  left: 250px;
+}
+
+#mon {
+  background-image: url("assets/mon_stand.png");
+  left: 350px;
+}
+
+.text {
+    position: absolute;
+    text-align: right;
+    font-family: "Comic Sans MS", "Comic Sans", sans-serif;
+    font-size: 45px;
+    transform: translate(-50%, -50%);
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;    
+}
+
+.text.left {
+     left: 826px;
+}
+
+.text.right {
+     left: 1172px;
+}
+
+#text1 {
+    top: 265px;
+}
+
+#text2 {
+    top: 265px;
+}
+
+#text3 {
+    top: 405px;
+}
+
+#text4 {
+    top: 405px;
+}
+
+#text5 {
+    top: 541px;
+}
+
+#text6 {
+    top: 541px;
+}
+
+#text7 {
+    top: 679px;
+}
+
+#text8 {
+    top: 679px;
+}
+
+#text9 {
+    top: 817px;
+}
+
+#text10 {
+    top: 817px;
+}
+
+.fetext {
+    position: absolute;
+    text-align: left;
+    font-family: "Comic Sans MS", "Comic Sans", sans-serif;
+    font-size: 45px;
+    color: black;
+    -webkit-text-fill-color: white; 
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;    
+    left: 1460px
+}
+
+.speaker {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  left: 95%;
+  top: 92%;  
+}
+
+#speaker1 {
+    background-image: url("assets/speakeron.png");
+}
+
+#girlt1 {
+    color: #7EC0EE;
+    -webkit-text-stroke-color: #7EC0EE;      
+    top: 152px;
+}
+
+#girlt2 {
+    color: pink;
+    -webkit-text-stroke-color: pink;      
+    top: 200px;
+}
+
+#girlt3 {
+    color: purple;
+    -webkit-text-stroke-color: purple;      
+    top: 247px;
+}
+
+#girlt4 {
+    color: green;
+    -webkit-text-stroke-color: green;  
+    top: 294px;
+}

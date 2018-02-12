@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+<meta charset="utf-8" />
+<title>Doki Doki Poem Minigame</title>
+<link rel="stylesheet" type="text/css" href="dokistyle2.css">
+</head>
+<body>
+  <div id="mainContent">
+      <div id="say" class="girl"></div>
+      <div id="nat" class="girl"></div>
+      <div id="yuri" class="girl"></div>
+      <div id="mon" class="girl"></div>
+  </div>
+  <div id="text1" class="text left">incapable</div>
+  <div id="text2" class="text right">incapable</div>
+  <div id="text3" class="text left">incapable</div>
+  <div id="text4" class="text right">incapable</div>
+  <div id="text5" class="text left">incapable</div>
+  <div id="text6" class="text right">incapable</div>  
+  <div id="text7" class="text left">incapable</div>
+  <div id="text8" class="text right">incapable</div> 
+  <div id="text9" class="text left">incapable</div>
+  <div id="text10" class="text right">incapable</div>   
+  <div id="girlt1" class="fetext">Sayori: 0</div>
+  <div id="girlt2" class="fetext">Natsuki: 0</div>
+  <div id="girlt3" class="fetext">Yuri: 0</div>
+  <div id="girlt4" class="fetext">Monika: 0</div>
+  <div id="cover"></div>
+  <div id="speaker1" class="speaker"></div>
+  <audio id="player" src="music/Okay.mp3" autoplay loop></audio>
+  <script src="js/words.js"></script>
+  <script>
+    var background = document.getElementById("mainContent");
+    var natsuki = document.getElementById("nat");
+    var sayori = document.getElementById("say");
+    var yuri = document.getElementById("yuri");
+    var monika = document.getElementById("mon");
+    var texts = document.getElementsByClassName("text");
+    var girls = document.getElementsByClassName("girl");
+    var move = 0;
+    var jump = 0;
+    var minleft = 0;
+    var maxleft = 0;
+    var sayori_count = 0;
+    var natsuki_count = 0;
+    var yuri_count = 0;
+    var monika_count = 0;
+    var timer = setInterval(free_move, 3000);
+    var timer2 = setInterval(updateScreen, 100);    
+    var girl = 1;
+    var musicon = true;
+    var window_state = "visible";
+    var curWidth;
+    var curHeight;
+    var temparray = [];
+    var girl_music = 0;
+    
+    function adjustW(width) {
+        return Math.floor((width / 1920) * window.innerWidth);
+    }
+    
+    function adjustH(height) {
+        return Math.floor((height / 1080) * window.innerHeight);
+    }
+    
+    function updateScreen() {
+    
+        if (window.innerWidth < 1463) {
+            document.getElementById("cover").style.visibility = "visible";
+        } else {
+            document.getElementById("cover").style.visibility = "hidden";
+            if (curWidth != window.innerWidth || curHeight != window.innerHeight) {
+                curWidth = window.innerWidth;
+                curHeight = window.innerHeight;            
+                move = adjustW(15);
+                jump = adjustH(30);
+                minleft = adjustW(-35);
+                maxleft = adjustW(475);        
+                natsuki.left = adjustW(50);
+                natsuki.top = adjustH(842);
+                sayori.left = adjustW(150);
+                sayori.top = adjustH(842);  
+                yuri.left = adjustW(250);
+                yuri.top = adjustH(842);   
+                monika.left = adjustW(350);
+                monika.top = adjustH(842);  
+                natsuki.style.left = natsuki.left + "px";
+                natsuki.style.top = natsuki.top + "px";
+                sayori.style.left = sayori.left + "px";
+                sayori.style.top = sayori.top + "px";  
+                yuri.style.left = yuri.left + "px";
+                yuri.style.top = yuri.top + "px";
+                monika.style.left = monika.left + "px";
+                monika.style.top = monika.top + "px";
+                background.style.width = window.innerWidth + "px";
+                background.style.height = window.innerHeight + "px";
+            }
+        }
+    }
+    
+    function free_move() {
+        if (window_state == "visible") {
+            if (girl == 1)
+                sayori.movement();
+            else if (girl == 2)
+                natsuki.movement();
+            else if (girl == 3)
+                yuri.movement();
+            else
+                monika.movement();
+            
+            girl == 4 ? girl -= 3 : girl++;
+        }
+    }    
+    
+    for (i = 0; i < girls.length; i++) {
+        girls[i].moving = false;      
+    
+        girls[i].update = function () {
+            this.left = parseInt(this.style.left.substr(0,3));
+            this.style.left = this.left + move + "px";
+            this.top = adjustH(842);
+            this.style.top = this.top + "px";
+            this.style.backgroundImage = "url(assets/" + this.id + "_stand.png)";
+            this.removeEventListener("transitionend", this.update, true);
+            this.moving = false;
+        }
+        
+        girls[i].move = function () {
+            var left = parseInt(this.style.left.replace("px",""));
+            var top = parseInt(this.style.top.replace("px",""));
+            
+            this.addEventListener("transitionend", this.update, true);
+            this.moving = true;
+            this.style.left = left + move + "px";
+            this.style.top = top - jump + "px";
+        }            
+
+        girls[i].movement = function () {
+            this.left = parseInt(this.style.left.replace("px",""));
+            this.top = parseInt(this.style.left.replace("px",""));
+            
+            console.log(String(this.top));
+            
+            if (this.left > maxleft) {
+                this.style.left = maxleft + "px";
+            }
+            
+            if (this.top != adjustH(842)) {
+                this.style.top = adjustH(842) + "px";
+            }            
+            
+            var random = Math.random();
+            if (this.left < minleft) {
+                this.style.transform = "scaleX(-1)";
+                move = Math.abs(move);
+                this.move();
+            } else if (this.left >= maxleft) {
+                this.style.transform = "scaleX(1)";
+                move *= -1;
+                this.move();
+            } else if (random < 0.75) {
+                this.style.transform = "scaleX(1)";
+                move *= -1;
+                this.move();
+            } else {
+                this.style.transform = "scaleX(-1)";
+                move = Math.abs(move);
+                this.move();      
+            }
+        }
+
+        girls[i].jump = function () {
+            this.style.backgroundImage = "url(assets/" + this.id + "_air.png)";
+            if (!(this.moving)) {
+                this.movement();
+                girl == 3 ? girl -= 2 : girl++; 
+            }
+        } 
+    }
+    
+    for (i = 0; i < texts.length; i++) {
+        texts[i].onmouseover = function () {
+            this.style.textShadow = "2px 5px 5px black"
+        };
+        
+        texts[i].onmouseleave = function () {
+            this.style.textShadow = ""
+        };    
+            
+        texts[i].onmousedown = function () {
+            inc_count(this.innerHTML);
+            temparray = choose();
+            
+            for (i = 0; i < texts.length; i++)
+                texts[i].innerHTML = temparray[i];
+        }; 
+    } 
+    
+    document.getElementById("speaker1").onmousedown = function click() {
+        if (musicon) {
+            this.style.backgroundImage = "url(assets/speakeroff.png)";
+            document.getElementById('player').volume = 0;
+            musicon = false;
+        } else {
+            this.style.backgroundImage = "url(assets/speakeron.png)";
+            document.getElementById('player').volume = 1;    
+            musicon = true;
+        }
+    }
+    
+    temparray = choose();
+    document.getElementById("text1").innerHTML = temparray[0];
+    document.getElementById("text2").innerHTML = temparray[1];  
+    document.getElementById("text3").innerHTML = temparray[2];
+    document.getElementById("text4").innerHTML = temparray[3];
+    document.getElementById("text5").innerHTML = temparray[4];
+    document.getElementById("text6").innerHTML = temparray[5];
+    document.getElementById("text7").innerHTML = temparray[6];
+    document.getElementById("text8").innerHTML = temparray[7];
+    document.getElementById("text9").innerHTML = temparray[8];
+    document.getElementById("text10").innerHTML = temparray[9];
+
+  </script>
+  <script src="js/stop.js"></script>
+</body>
+
+</html>
