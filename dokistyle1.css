@@ -8,6 +8,17 @@
   overflow: hidden;
 }
 
+#cover {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-image: url("cover.png");
+  width: 1920px;
+  height: 940px;
+  overflow: hidden;
+  visibility: hidden;  
+}
+
 .girl {
   position: absolute;
   width: 128px;

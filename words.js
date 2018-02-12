@@ -24,18 +24,32 @@ function choose() {
     var yuri_words = ["afterimage", "agonizing", "ambient", "analysis", "anxiety", "atone", "aura", "breathe", "cage", "captive", "climax", "contamination", "covet", "crimson", "desire", "destiny", "determination", "disarray", "disaster", "disoriented", "despise", "disown", "dream", "effulgent", "electricity", "entropy", "essence", "eternity", "existence", "explode", "extreme", "fester", "fickle", "flee", "frightening", "graveyard", "heavensent", "horror", "imagination", "incapable", "incongruent", "infallible", "inferno", "infinite", "insight", "intellectual", "journey", "judgment", "lust", "landscape", "massacre", "meager", "melancholy", "philosophy", "pleasure", "portrait", "question", "raindrops", "secretive", "sensation", "starscape", "suicide", "tenacious", "time", "uncontrollable", "uncanny", "unending", "universe", "unrestrained", "unstable", "variance", "vertigo", "vibrant", "vitality", "vivacious", "vivid", "whirlwind", "wrath"];
     var rand_girl = Math.floor(Math.random() * 3) + 1;
     var rand_word = "";
+    var rand_array = [];
+    var rand = 0;
     
-    switch (rand_girl) {
-        case 1:
-            rand_word = sayori_words[Math.floor(Math.random() * sayori_words.length)];
-            break;
-        case 2:
-            rand_word = natsuki_words[Math.floor(Math.random() * natsuki_words.length)];
-            break;
-        case 3:
-            rand_word = yuri_words[Math.floor(Math.random() * yuri_words.length)];
-            break;
+    for (i = 0; i < 10; i++) {
+        rand_girl = Math.floor(Math.random() * 3) + 1;
+       
+        switch (rand_girl) {
+            case 1:
+                rand = Math.floor(Math.random() * sayori_words.length);
+                rand_word = sayori_words[rand];
+                sayori_words.splice(rand, 1);
+                break;
+            case 2:
+                rand = Math.floor(Math.random() * natsuki_words.length);
+                rand_word = natsuki_words[rand];
+                natsuki_words.splice(rand, 1);
+                break;
+            case 3:
+                rand = Math.floor(Math.random() * yuri_words.length);
+                rand_word = yuri_words[rand];
+                yuri_words.splice(rand, 1);
+                break;
+        }
+        console.log(rand_word);
+        rand_array.push(rand_word);
     }
     
-    return rand_word;
+    return rand_array;
 }
