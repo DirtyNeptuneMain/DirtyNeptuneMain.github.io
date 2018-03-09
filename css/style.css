@@ -1,0 +1,22 @@
+#ti {
+    position: absolute;
+    text-align: right;
+    font-family: "Comic Sans MS", "Comic Sans", sans-serif;
+    font-size: 45px;
+}
+
+#guess {
+    position: absolute;
+    top: 90px;
+    left: 150px;
+}
+
+#pred {
+    position: absolute;
+    text-align: right;
+    font-family: "Comic Sans MS", "Comic Sans", sans-serif;
+    font-size: 16px;    
+    position: absolute;
+    top: 65px;
+    left: 150px;
+}
