@@ -5,19 +5,40 @@
  *
 */
 
+var curval = "";
+var guessWord = "";
+
+function randomWord(character) {
+    var words2 = [];
+    
+    for (var i = 0; i < words.length; i++)
+        if (words[i].indexOf(character) == 0)
+            words2.push(words[i]);
+        
+    return words2[Math.floor(Math.random() * words2.length)].toLowerCase();
+}
+
 function update() {
-    if ($('#guess').val() == "k")
-        $('#pred').text("ka");
-    else if ($('#guess').val() == "ka")
-        $('#pred').text("kap");
-    else if ($('#guess').val() == "kap")
-        $('#pred').text("kapp"); 
-    else if ($('#guess').val() == "kapp")
-        $('#pred').text("kappa");  
-    else if ($('#guess').val() == "kappa")
-        $('#pred').text("kappa");    
-    else
-        $('#pred').text("");      
+    var value = $('#guess').val().toLowerCase();
+    var wordset = false;
+    
+    if (value == "")
+        guessWord = "";
+    
+    if (wordset) {
+        if (guessWord.indexOf(value) != 0) {
+            guessWord = "";
+            wordset = false;
+        }
+    } else {
+        if (value != "" && value != curval) {
+            guessWord = randomWord(value); 
+            curval = value;
+            wordset = true;            
+        }
+    }
+    
+    $('#pred').val(guessWord);
 }
 
 var timer = setInterval(update, 200);

@@ -7,16 +7,14 @@
 
 #guess {
     position: absolute;
+    background: transparent;
     top: 90px;
     left: 150px;
 }
 
 #pred {
     position: absolute;
-    text-align: right;
-    font-family: "Comic Sans MS", "Comic Sans", sans-serif;
-    font-size: 16px;    
-    position: absolute;
-    top: 65px;
+    color: #d3d3d3;
+    top: 90px;
     left: 150px;
 }
