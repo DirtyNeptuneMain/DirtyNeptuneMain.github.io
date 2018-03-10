@@ -14,15 +14,18 @@ function randomWord(character) {
     for (var i = 0; i < words.length; i++)
         if (words[i].indexOf(character) == 0)
             words2.push(words[i]);
-        
-    return words2[Math.floor(Math.random() * words2.length)].toLowerCase();
+    
+    if (words2.length == 0)
+        return "";
+    else
+        return words2[Math.floor(Math.random() * words2.length)].toLowerCase();
 }
 
 function update() {
     var value = $('#guess').val().toLowerCase();
     var wordset = false;
     
-    if (value == "")
+    if (value == "" || value.length > guessWord)
         guessWord = "";
     
     if (wordset) {
@@ -31,7 +34,7 @@ function update() {
             wordset = false;
         }
     } else {
-        if (value != "" && value != curval) {
+        if (value != "" && value != curval && guessWord.indexOf(value) != 0) {
             guessWord = randomWord(value); 
             curval = value;
             wordset = true;            
