@@ -1,0 +1,13 @@
+{
+"companyName": "DefaultCompany",
+"productName": "SSSPong",
+"dataUrl": "SSSPong.data.unityweb",
+"asmCodeUrl": "SSSPong.asm.code.unityweb",
+"asmMemoryUrl": "SSSPong.asm.memory.unityweb",
+"asmFrameworkUrl": "SSSPong.asm.framework.unityweb",
+"TOTAL_MEMORY": 268435456,
+"graphicsAPI": ["WebGL 2.0", "WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+"backgroundColor": "#231F20"
+}
